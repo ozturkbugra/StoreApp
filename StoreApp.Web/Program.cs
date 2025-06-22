@@ -9,7 +9,7 @@ builder.Services.AddControllersWithViews();
 
 
 builder.Services.AddDbContext<StoreDBContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b=> b.MigrationsAssembly("StoreApp.Web")));
 
 builder.Services.AddScoped<IStoreRepository, EFStoreRepository>();
 
