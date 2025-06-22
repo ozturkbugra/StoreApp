@@ -25,6 +25,8 @@ namespace StoreApp.Web.Models
     {
         public int TotalItems { get; set; }
         public int ItemsPerPage { get; set; }
+        public int CurrentPage { get; set; }       // Mevcut sayfa
+
         public int TotalPages => (int)Math.Ceiling((decimal)TotalItems / ItemsPerPage);
     }
 }

@@ -3,17 +3,56 @@
     ViewData["Title"] = "Home Page";
 }
 
-@foreach(var item in Model.Products)
-{
-    <div class="text-center">
-        <h4 class="display-4">@item.Name</h4>
-        <p>@item.Description</p>
-        <p>@item.Price</p>
+<div class="row">
+    <div class="col-md-3">
+        Kategoriler
     </div>
-}   
+    <div class="col-md-9">
+        @foreach (var item in Model.Products)
+        {
+            <div class="card card-outline-secondary mb-2 p-2">
+
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="display-4">@item.Name</h4>
+                        <p>@item.Description</p>
+                    </div>
+                    <div>
+                        <span class="badge bg-success">@item.Price</span>
+                   
+                    </div>
+                </div>
+            </div>
+        }
 
 
-@for(var i=1; i<= Model.PageInfo.TotalPages; i++)
-{
-    <a href="/?page=@i">@i</a>
-}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="/?page=@(Model.PageInfo.CurrentPage > 1 ? Model.PageInfo.CurrentPage - 1 : 1)" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                @for (var i = 1; i <= Model.PageInfo.TotalPages; i++)
+                {
+                    var activeClass = i == Model.PageInfo.CurrentPage ? "active" : "";
+                    <li class="page-item @activeClass">
+                        <a class="page-link" href="/?page=@i">@i</a>
+                    </li>
+                }
+
+                <li class="page-item">
+                    <a class="page-link" href="/?page=@(Model.PageInfo.CurrentPage < Model.PageInfo.TotalPages ? Model.PageInfo.CurrentPage + 1 : Model.PageInfo.TotalPages)" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+
+       
+    </div>
+
+</div>
+
