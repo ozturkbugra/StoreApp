@@ -9,24 +9,36 @@ public class HomeController : Controller
 {
     private readonly IStoreRepository _repository;
 
+    public int pageSize = 3;
+
     public HomeController(IStoreRepository repository)
     {
         _repository = repository;
     }
 
-    public IActionResult Index()
+    public IActionResult Index(int page=1)
     {
-        var products = _repository.Products.Select(p=> new ProductViewModel { 
-        Id = p.Id,
-        Category = p.Category,
-        Description = p.Description,
-        Name = p.Name,
-        Price = p.Price
-        }).ToList();
+        var products = _repository
+            .Products
+            .Skip((page - 1) * pageSize)  
+                .Select(p => new ProductViewModel
+                {
+                    Id = p.Id,
+                    Category = p.Category,
+                    Description = p.Description,
+                    Name = p.Name,
+                    Price = p.Price
+                }).Take(pageSize);
+
 
         return View(new ProductListViewModel
         {
-            Products = products
+            Products = products,
+            PageInfo = new PageInfo
+            {
+                ItemsPerPage = pageSize,
+                TotalItems = _repository.Products.Count()
+            }
         });
     }
 
