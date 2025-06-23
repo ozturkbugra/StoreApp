@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StoreApp.Data.Abstract;
@@ -9,12 +10,14 @@ namespace StoreApp.Web.Controllers;
 public class HomeController : Controller
 {
     private readonly IStoreRepository _repository;
+    private readonly IMapper _mapper;
 
     public int pageSize = 3;
 
-    public HomeController(IStoreRepository repository)
+    public HomeController(IStoreRepository repository, IMapper mapper)
     {
         _repository = repository;
+        _mapper = mapper;
     }
 
     public IActionResult Index(string category,int page=1)
@@ -24,13 +27,8 @@ public class HomeController : Controller
 
         return View(new ProductListViewModel
         {
-            Products = _repository.GetProductsByCategory(category,page,pageSize).Select(p => new ProductViewModel
-            {
-                Id = p.Id,
-                Description = p.Description,
-                Name = p.Name,
-                Price = p.Price
-            }),
+            Products = _repository.GetProductsByCategory(category,page,pageSize)
+            .Select(x=>_mapper.Map<ProductViewModel>(x)),
             PageInfo = new PageInfo
             {
                 ItemsPerPage = pageSize,
