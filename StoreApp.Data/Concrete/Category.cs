@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace StoreApp.Data.Concrete
 {
-    public class Product
+    public class Category
     {
         [Key]
         public int Id { get; set; }
 
         public string? Name { get; set; }
-        public string? Description { get; set; }
-        public decimal Price { get; set; }
+        public string? Url { get; set; }
 
-        public List<Category> Categories { get; set; } = new();
+        public List<Product> Products { get; set; } = new();
+
     }
 }

@@ -14,7 +14,7 @@ namespace StoreApp.Web.Components
 
         public IViewComponentResult Invoke()
         {
-            return View(_storeRepository.Products.Select(c => c.Category).Distinct().OrderBy(x=> x));
+            return View(_storeRepository.Products.Distinct().OrderBy(x=> x));
         }
     }
 }

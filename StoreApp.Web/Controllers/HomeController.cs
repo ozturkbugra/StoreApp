@@ -24,7 +24,6 @@ public class HomeController : Controller
                 .Select(p => new ProductViewModel
                 {
                     Id = p.Id,
-                    Category = p.Category,
                     Description = p.Description,
                     Name = p.Name,
                     Price = p.Price
