@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StoreApp.Data.Abstract;
 using StoreApp.Web.Models;
 
@@ -16,29 +17,24 @@ public class HomeController : Controller
         _repository = repository;
     }
 
-    public IActionResult Index(int page=1)
+    public IActionResult Index(string category,int page=1)
     {
         ViewBag.SelectedCategory= RouteData?.Values["category"];
-
-        var products = _repository
-            .Products
-            .Skip((page - 1) * pageSize)  
-                .Select(p => new ProductViewModel
-                {
-                    Id = p.Id,
-                    Description = p.Description,
-                    Name = p.Name,
-                    Price = p.Price
-                }).Take(pageSize);
 
 
         return View(new ProductListViewModel
         {
-            Products = products,
+            Products = _repository.GetProductsByCategory(category,page,pageSize).Select(p => new ProductViewModel
+            {
+                Id = p.Id,
+                Description = p.Description,
+                Name = p.Name,
+                Price = p.Price
+            }),
             PageInfo = new PageInfo
             {
                 ItemsPerPage = pageSize,
-                TotalItems = _repository.Products.Count(),
+                TotalItems = _repository.GetProductCount(category),
                 CurrentPage= page
             }
         });
