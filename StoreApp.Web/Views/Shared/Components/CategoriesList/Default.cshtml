@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<string>
+@model IEnumerable<CategoryViewModel>
 
 <div class="d-grid gap-2">
     <a class="btn btn-outline-secondary" asp-action="Index" asp-controller="Home">
@@ -9,7 +9,7 @@
     @foreach(var item in Model)
     {
         <a class="btn btn-outline-secondary" asp-action="Index" asp-controller="Home">
-            @item
+            @item.Name
         </a>
     }
 </div>
