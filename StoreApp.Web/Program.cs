@@ -30,6 +30,14 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+//kategori ürün listesi
+app.MapControllerRoute("products_in_category", "products/{category?}", new { controller = "Home", action = "Index" });
+
+
+//ürün detay
+app.MapControllerRoute("product_details", "{name}", new { controller = "Home", action = "Details"});
+
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

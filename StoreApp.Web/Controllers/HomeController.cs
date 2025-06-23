@@ -18,6 +18,8 @@ public class HomeController : Controller
 
     public IActionResult Index(int page=1)
     {
+        ViewBag.SelectedCategory= RouteData?.Values["category"];
+
         var products = _repository
             .Products
             .Skip((page - 1) * pageSize)  

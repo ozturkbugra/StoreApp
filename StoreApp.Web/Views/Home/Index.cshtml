@@ -38,7 +38,7 @@
                 {
                     var activeClass = i == Model.PageInfo.CurrentPage ? "active" : "";
                     <li class="page-item @activeClass">
-                        <a class="page-link" href="/?page=@i">@i</a>
+                        <a class="page-link" asp-route-page="@i">@i</a>
                     </li>
                 }
 
