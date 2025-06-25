@@ -6,7 +6,7 @@ namespace StoreApp.Web.Models
     {
         public List<CartItem> Items { get; set; } = new List<CartItem>();
 
-        public void AddItem(Product product, int quantity)
+        public virtual void AddItem(Product product, int quantity)
         {
             var item = Items.Where(x => x.Product.Id == product.Id).FirstOrDefault();
 
@@ -20,7 +20,7 @@ namespace StoreApp.Web.Models
             }
         }
 
-        public void RemoveItem(Product product)
+        public virtual void RemoveItem(Product product)
         {
             Items.RemoveAll(x => x.Product.Id == product.Id);
         }
@@ -30,7 +30,7 @@ namespace StoreApp.Web.Models
             return Items.Sum(x => x.Product.Price * x.Quantity);
         }
 
-        public void Clear()
+        public virtual void Clear()
         {
             Items.Clear();
         }

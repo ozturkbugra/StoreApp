@@ -17,7 +17,8 @@ builder.Services.AddDbContext<StoreDBContext>(options =>
 builder.Services.AddScoped<IStoreRepository, EFStoreRepository>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
-
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<Cart>(x => SessionCart.GetCart(x));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
