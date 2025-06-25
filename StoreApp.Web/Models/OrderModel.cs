@@ -1,4 +1,6 @@
-﻿using StoreApp.Data.Concrete;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using StoreApp.Data.Concrete;
+using System.ComponentModel.DataAnnotations;
 
 namespace StoreApp.Web.Models
 {
@@ -11,10 +13,13 @@ namespace StoreApp.Web.Models
             public string Name { get; set; }
             public string City { get; set; }
             public string Phone { get; set; }
+
+            [EmailAddress]
             public string Email { get; set; }
             public string AddressLine { get; set; }
 
-            public Cart Cart { get; set; } = new();
+            [BindNever]
+            public Cart? Cart { get; set; } = null!;
         
     }
 }
