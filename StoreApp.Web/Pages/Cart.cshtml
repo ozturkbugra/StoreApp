@@ -1,6 +1,40 @@
 ﻿@page
-@model StoreApp.Web.Pages.CartModel
+@model CartModel
 @{
 }
 
-<h1>Card</h1>
+<h2>Alışveriş Sepeti</h2>
+
+<table class="table table-bordered table-striped table-hover">
+
+    <thead>
+        <tr>
+            <th>Quantity</th>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model.Cart.Items ?? new List<CartItem>())
+        {
+            <tr>
+                <td>@item.Quantity</td>
+                <td>@item.Product.Name</td>
+                <td>@item.Product.Price.ToString("N2")</td>
+                <td>@((item.Quantity * item.Product.Price).ToString("N2"))
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">Total</td>
+            <td >@Model.Cart.CalculateTotal().ToString("N2") ₺</td>
+        </tr>
+    </tfoot>
+</table>
+
+<div>
+    <a href="/">Alışverişe Devam Et</a>
+</div>
